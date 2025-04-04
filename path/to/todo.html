@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>待办事项列表</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f9; /* 背景颜色调整 */
+        }
+        h1 {
+            text-align: center;
+            color: #333; /* 标题颜色调整 */
+        }
+        .todo-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff; /* 容器背景颜色调整 */
+            padding: 20px;
+            border-radius: 8px; /* 圆角 */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 阴影 */
+        }
+        .todo-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px; /* 圆角 */
+        }
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .todo-item {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: 4px; /* 圆角 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* 阴影 */
+        }
+        .todo-item.completed {
+            text-decoration: line-through; /* 确保完成项有中划线 */
+            color: #888;
+            background-color: #e9ecef; /* 完成项背景颜色调整 */
+        }
+        .todo-button {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+            border-radius: 4px; /* 圆角 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 阴影 */
+        }
+        .todo-button.delete {
+            background-color: #dc3545;
+        }
+        .todo-button:hover {
+            opacity: 0.8; /* 按钮悬停效果 */
+        }
+    </style>
+</head>
+<body>
+    <h1>待办事项列表</h1>
+    <div class="todo-container">
+        <input type="text" id="todo-input" class="todo-input" placeholder="添加新的待办事项...">
+        <button onclick="addTodo()">添加</button>
+        <ul id="todo-list" class="todo-list"></ul>
+    </div>
+
+    <script>
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const todoText = input.value.trim();
+            if (todoText === '') {
+                alert('请输入待办事项内容');
+                return;
+            }
+
+            const todoList = document.getElementById('todo-list');
+            const todoItem = document.createElement('li');
+            todoItem.className = 'todo-item';
+
+            const todoTextSpan = document.createElement('span');
+            todoTextSpan.textContent = todoText;
+            todoItem.appendChild(todoTextSpan);
+
+            const completeButton = document.createElement('button');
+            completeButton.className = 'todo-button';
+            completeButton.textContent = '完成';
+            completeButton.onclick = function() {
+                todoItem.classList.toggle('completed');
+            };
+            todoItem.appendChild(completeButton);
+
+            const deleteButton = document.createElement('button');
+            deleteButton.className = 'todo-button delete';
+            deleteButton.textContent = '删除';
+            deleteButton.onclick = function() {
+                todoList.removeChild(todoItem);
+            };
+            todoItem.appendChild(deleteButton);
+
+            todoList.appendChild(todoItem);
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
